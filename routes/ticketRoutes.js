@@ -1,9 +1,11 @@
 import express from 'express'
+import { isAuth } from '../middlewares/isAuth.js'
+import { isAdmin } from '../middlewares/isAdmin.js'
 import { DeleteTicketCustomer, createTicketAdminAndEmployee, createTicketCustomer, getAllTickets, getTicketById, getTicketByIdCustomer, updateTicketById } from '../controller/ticketController.js'
 
 const ticketRoutes = express.Router()
 
-ticketRoutes.post('/', createTicketAdminAndEmployee)
+ticketRoutes.post('/', isAuth, isAdmin, createTicketAdminAndEmployee)
 ticketRoutes.post('/customers', createTicketCustomer)
 ticketRoutes.get('/', getAllTickets)
 ticketRoutes.get('/:ticketId', getTicketById)
