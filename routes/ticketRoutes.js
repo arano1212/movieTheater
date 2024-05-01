@@ -11,7 +11,7 @@ ticketRoutes.post('/', isAuth, isAdmin, createTicketAdminAndEmployee)
 ticketRoutes.post('/customers', isAuth, isCustomer, createTicketCustomer)
 ticketRoutes.get('/', isAuth, isAdmin, getAllTickets)
 ticketRoutes.get('/:ticketId', isAuth, isAdmin, getTicketById)
-ticketRoutes.get('/customers/:ticketCustomerId', isAuth, isAdmin, isCustomer, isEmployee getTicketByIdCustomer)
+ticketRoutes.get('/customers/:ticketCustomerId', isAuth, isAdmin, isCustomer, isEmployee, getTicketByIdCustomer)
 ticketRoutes.patch('/customers/:ticketCustomerId', isAuth, isAdmin, updateTicketById)
 ticketRoutes.delete('/customers/:ticketCustomerId', isAuth, isAdmin, DeleteTicketCustomer)
 
