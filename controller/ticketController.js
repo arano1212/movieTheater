@@ -70,8 +70,57 @@ const getAllTickets = async (req, res) => {
   }
 }
 
+const getTicketById = async (req, res) => {
+  if (!req.params.ticketId.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ msg: 'invalid ticket ID' })
+  }
+  try {
+    const ticket = await Ticket.findById(req.params.ticketId, req.params.seats, { isActive: true }).populate('movie')
+    if (!ticket) {
+      return res.status(404).json({ msg: 'ticket not found' })
+    }
+    res.status(200).json(ticket)
+  } catch (error) {
+    res.status(400).json({ error: 'ticket create Admin not found' })
+  }
+}
+
+const getTicketByIdCustomer = async (req, res) => {
+  if (!req.params.ticketCustomerId.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ msg: 'invalid ticket ID' })
+  }
+  try {
+    const ticketCustomer = await TicketCustomer.findById(req.params.ticketCustomerId, req.params.seats, { isActive: true }).populate('movie')
+    if (!ticketCustomer) {
+      return res.status(404).json({ msg: 'ticket not found' })
+    }
+    res.status(200).json(ticketCustomer)
+  } catch (error) {
+    res.status(400).json({ error: 'ticket create customer not found' })
+  }
+}
+
+const updateTicketById = async (req, res) => {
+  if (!req.params.ticketCustomerId.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ msg: 'invalid ticket ID' })
+  }
+  try {
+    const ticketCustomer = await TicketCustomer
+      .findByIdAndUpdate(req.params.ticketCustomerId, req.body, { new: true }).populate('movie')
+    if (!ticketCustomer) {
+      return res.status(404).json({ msg: 'ticket no found' })
+    }
+    res.status(200).json(ticketCustomer)
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
+}
+
 export {
   createTicketAdminAndEmployee,
   createTicketCustomer,
-  getAllTickets
+  getAllTickets,
+  getTicketById,
+  getTicketByIdCustomer,
+  updateTicketById
 }
