@@ -50,7 +50,28 @@ const createTicketCustomer = async (req, res) => {
   }
 }
 
+const getAllTickets = async (req, res) => {
+  try {
+    const tickets = await Ticket.find({ isActive: true }).populate('user  movie')
+    const ticketsCustomers = await TicketCustomer.find({ isActive: true }).populate('user  movie')
+
+    if (!tickets) {
+      return res.status(404).json({ msg: 'tickets  no found' })
+    }
+    if (!ticketsCustomers) {
+      return res.status(404).json({ msg: 'tickets  customer no found' })
+    }
+
+    const alltickets = { tickets, ticketsCustomers }
+
+    res.status(200).json(alltickets)
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
+}
+
 export {
   createTicketAdmin,
-  createTicketCustomer
+  createTicketCustomer,
+  getAllTickets
 }
