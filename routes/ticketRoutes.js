@@ -1,9 +1,9 @@
 import express from 'express'
-import { createTicketAdmin, createTicketCustomer, getAllTickets } from '../controller/ticketController.js'
+import { createTicketAdminAndEmployee, createTicketCustomer, getAllTickets } from '../controller/ticketController.js'
 
 const ticketRoutes = express.Router()
 
-ticketRoutes.post('/', createTicketAdmin)
+ticketRoutes.post('/', createTicketAdminAndEmployee)
 ticketRoutes.post('/customers', createTicketCustomer)
 ticketRoutes.get('/customers', getAllTickets)
 

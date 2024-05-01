@@ -3,7 +3,7 @@ import User from '../models/user.js'
 import Movie from '../models/movie.js'
 import TicketCustomer from '../models/ticketCustomer.js'
 
-const createTicketAdmin = async (req, res) => {
+const createTicketAdminAndEmployee = async (req, res) => {
   try {
     const ticketData = req.body
     if (!ticketData.movie || !ticketData.user) {
@@ -71,7 +71,7 @@ const getAllTickets = async (req, res) => {
 }
 
 export {
-  createTicketAdmin,
+  createTicketAdminAndEmployee,
   createTicketCustomer,
   getAllTickets
 }
