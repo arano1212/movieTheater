@@ -116,11 +116,43 @@ const updateTicketById = async (req, res) => {
   }
 }
 
+const DeleteTicketCustomer = async (req, res) => {
+  if (!req.params.ticketCustomerId.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ msg: 'invalid ticket ID' })
+  }
+  if (req.query.destroy === 'true') {
+    try {
+      const ticketCustomer = await TicketCustomer
+        .findByIdAndDelete(req.params.ticketCustomerId)
+      if (!ticketCustomer) {
+        return res.status(404).json({ msg: 'ticket customer no found' })
+      }
+      return res.status(204).json()
+    } catch (error) {
+      return res.status(400).json({ error: error.message })
+    }
+  }
+
+  try {
+    const ticketCustomer = await TicketCustomer
+      .findByIdAndUpdate(req.params.ticketCustomerId, { isACtive: false }, { new: false })
+
+    if (!ticketCustomer) {
+      return res.status(404).json({ msg: 'ticket customer not found' })
+    }
+    res.status(204).json({msg: ' ticket custoerm not found'})
+  } catch (error) {
+    res.status(400).json(error: error.message)
+
+  }
+}
+
 export {
   createTicketAdminAndEmployee,
   createTicketCustomer,
   getAllTickets,
   getTicketById,
   getTicketByIdCustomer,
-  updateTicketById
+  updateTicketById,
+  DeleteTicketCustomer
 }
