@@ -13,7 +13,13 @@ const ticketCustomerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-    role: 'employee'
+    role: 'customer'
+  },
+  movie: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Movie',
+    required: true
+
   },
   quantity: { type: Number, required: true },
   ticketValue: { type: Number, default: 65 },
@@ -29,5 +35,8 @@ const ticketCustomerSchema = new mongoose.Schema({
   isActive: { type: Boolean, default: true }
 
 }, { timestamps: true })
+
+ticketCustomerSchema.set('toObject', { getters: true })
+ticketCustomerSchema.set('toJSON', { getters: true })
 
 export default mongoose.model('TicketCustomer', ticketCustomerSchema)

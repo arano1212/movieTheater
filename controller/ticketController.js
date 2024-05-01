@@ -1,6 +1,7 @@
 import Ticket from '../models/ticket.js'
 import User from '../models/user.js'
 import Movie from '../models/movie.js'
+import TicketCustomer from '../models/ticketCustomer.js'
 
 const createTicketAdmin = async (req, res) => {
   try {
@@ -39,10 +40,17 @@ const createTicketAdmin = async (req, res) => {
   }
 }
 
-/* const createTicketCustomer = async (req, res) => {
-
-} */
+const createTicketCustomer = async (req, res) => {
+  try {
+    const ticketDataCustomer = req.body
+    const newTicketCustomer = await TicketCustomer.create(ticketDataCustomer)
+    res.status(201).json(newTicketCustomer)
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
+}
 
 export {
-  createTicketAdmin
+  createTicketAdmin,
+  createTicketCustomer
 }
