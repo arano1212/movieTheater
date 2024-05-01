@@ -135,12 +135,12 @@ const DeleteTicketCustomer = async (req, res) => {
 
   try {
     const ticketCustomer = await TicketCustomer
-      .findByIdAndUpdate(req.params.ticketCustomerId, { isACtive: false }, { new: false })
+      .findByIdAndUpdate(req.params.ticketCustomerId, { isActive: false }, { new: false })
 
     if (!ticketCustomer) {
       return res.status(404).json({ msg: 'ticket customer not found' })
     }
-    res.status(204).json({ msg: ' ticket custoerm not found' })
+    res.status(204).json()
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

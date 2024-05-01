@@ -9,6 +9,6 @@ ticketRoutes.get('/', getAllTickets)
 ticketRoutes.get('/:ticketId', getTicketById)
 ticketRoutes.get('/customers/:ticketCustomerId', getTicketByIdCustomer)
 ticketRoutes.patch('/customers/:ticketCustomerId', updateTicketById)
-ticketRoutes.delete('/ustomers/:ticketCustomerId', DeleteTicketCustomer)
+ticketRoutes.delete('/customers/:ticketCustomerId', DeleteTicketCustomer)
 
 export default ticketRoutes
