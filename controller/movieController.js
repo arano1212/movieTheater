@@ -108,12 +108,43 @@ const deleteMovieById = async (req, res) => {
     res.status(400).json({ error: error.message })
   }
 }
+const getAllMovieQuery = async (req, res) => {
+  const querysDB = { isActive: true }
+
+  const queryKeys = ['title', 'genre', 'rating']
+
+  const index = queryKeys.indexOf('releaseDate')
+  if (index > -1) {
+    queryKeys.splice(index, 1)
+  }
+
+  queryKeys.forEach(key => {
+    if (req.query[key]) {
+      querysDB[key] = { $regex: new RegExp(req.query[key], 'i') }
+    }
+  })
+
+  if (req.query.releaseDate) {
+    querysDB.releaseDate = new Date(req.query.releaseDate)
+  }
+
+  try {
+    const movies = await Movie.find(querysDB).populate('directors')
+    if (!movies || movies.length === 0) {
+      return res.status(404).json({ msg: 'movies not found' })
+    }
+    res.status(200).json(movies)
+  } catch (error) {
+    res.status(400).json({ msg: error.message })
+  }
+}
 
 export {
   createMovie,
   getAllMovies,
   getMovieById,
   updateMovieById,
-  deleteMovieById
+  deleteMovieById,
+  getAllMovieQuery
 
 }
