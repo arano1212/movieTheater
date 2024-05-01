@@ -140,10 +140,9 @@ const DeleteTicketCustomer = async (req, res) => {
     if (!ticketCustomer) {
       return res.status(404).json({ msg: 'ticket customer not found' })
     }
-    res.status(204).json({msg: ' ticket custoerm not found'})
+    res.status(204).json({ msg: ' ticket custoerm not found' })
   } catch (error) {
-    res.status(400).json(error: error.message)
-
+    res.status(400).json({ error: error.message })
   }
 }
 
