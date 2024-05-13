@@ -1,4 +1,5 @@
 import User from '../models/user.js'
+import ticketCustomer from '../models/ticketCustomer.js'
 
 /* const createUSer = async (req, res) => {
   try {
@@ -9,7 +10,7 @@ import User from '../models/user.js'
     })
 
     if (existingUser) {
-      return res.status(200).json(existingUser)
+      return res.status(200).jston(existingUser)
     }
 
     const newUser = await User.create(req.body)
@@ -97,10 +98,27 @@ const deleteUserById = async (req, res) => {
   }
 }
 
+const historyTicketByUSer = async (req, res) => {
+  if (!req.params.userId.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ msg: 'invalid user ID' })
+  }
+  try {
+    const userId = req.params.userId
+    const tickets = await ticketCustomer.find({ user: userId })
+    if (!tickets || !tickets.length === 0) {
+      return res.status(404).json({ msg: ' user and tickets no found ' })
+    }
+    res.status(200).json(tickets)
+  } catch (error) {
+    res.status(404).json({ error: error.message })
+  }
+}
+
 export {
   // createUSer
   getAllUSer,
   getUSerById,
   updateUserById,
-  deleteUserById
+  deleteUserById,
+  historyTicketByUSer
 }
